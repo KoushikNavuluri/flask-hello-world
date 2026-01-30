@@ -1,0 +1,1826 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+  <title>Koushik Navuluri — Cloud Engineer Portfolio</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Devicon for tech logos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Favicons / meta -->
+  <meta name="theme-color" content="#264653">
+
+  <style>
+    /* Palette */
+    :root{
+      --p-0: #264653;
+      --p-1: #2a9d8f;
+      --p-2: #e9c46a;
+      --p-3: #f4a261;
+      --p-4: #e76f51;
+      --glass: rgba(255,255,255,0.06);
+      
+      /* Dark mode variables */
+      --bg-primary: #0b1220;
+      --bg-secondary: rgba(255,255,255,0.02);
+      --text-primary: #e6edf3;
+      --text-secondary: #cbd5e1;
+      --border-color: rgba(255,255,255,0.06);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      --terminal-text: rgba(233, 196, 106, 0.5);
+      --terminal-prompt: rgba(42, 157, 143, 0.7);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: rgba(0,0,0,0.02);
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --border-color: rgba(0,0,0,0.08);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      --terminal-text: rgba(38, 70, 83, 0.35);
+      --terminal-prompt: rgba(42, 157, 143, 0.5);
+    }
+
+    /* Custom text selection */
+    ::selection {
+      background-color: var(--p-2);
+      color: #0b1220;
+    }
+
+    ::-moz-selection {
+      background-color: var(--p-2);
+      color: #0b1220;
+    }
+
+    /* Base responsive setup */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* Animated radial gradient background */
+    body{
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      width: 100%;
+      max-width: 100vw;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: var(--text-primary);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body[data-theme="dark"] {
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(38,70,83,0.95), transparent 20%),
+                  radial-gradient(800px 400px at 90% 90%, rgba(231,111,81,0.9), transparent 18%),
+                  linear-gradient(180deg,var(--p-0), #0b1220 60%);
+    }
+
+    body[data-theme="light"] {
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(233,196,106,0.15), transparent 20%),
+                  radial-gradient(800px 400px at 90% 90%, rgba(231,111,81,0.15), transparent 18%),
+                  linear-gradient(180deg, #ffffff, #f8fafc 60%);
+    }
+
+    /* Terminal Animation Background */
+    .terminal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .terminal-line {
+      position: absolute;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 10px;
+      white-space: nowrap;
+      opacity: 0;
+      color: var(--terminal-text);
+      animation: terminalFade 15s linear infinite;
+      user-select: none;
+      font-weight: 500;
+      text-shadow: 0 0 1px rgba(0,0,0,0.1);
+    }
+
+    @media (min-width: 768px) {
+      .terminal-line {
+        font-size: 14px;
+      }
+    }
+
+    [data-theme="light"] .terminal-line {
+      font-weight: 600;
+      text-shadow: 0 0 2px rgba(255,255,255,0.8);
+    }
+
+    .terminal-prompt {
+      color: var(--terminal-prompt);
+      font-weight: 700;
+    }
+
+    [data-theme="light"] .terminal-prompt {
+      font-weight: 800;
+    }
+
+    @keyframes terminalFade {
+      0% {
+        opacity: 0;
+        transform: translateY(0);
+      }
+      5% {
+        opacity: 1;
+      }
+      95% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    @keyframes typewriter {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    .typing-effect {
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      animation: typewriter 3s steps(40) 1s forwards;
+    }
+
+    /* Heading font */
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+    }
+
+    /* Subtle animated sheen */
+    .sheen::after{
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+      transform: translateX(-110%);
+      transition: transform .9s ease;
+    }
+    .sheen:hover::after{ transform: translateX(110%); }
+
+    /* Floating geometric accents */
+    .accent{
+      position: absolute;
+      border-radius: 12px;
+      filter: blur(18px);
+      opacity: 0.12;
+      animation: float 8s ease-in-out infinite;
+      transform-origin: center;
+      transition: opacity 0.3s ease;
+    }
+    
+    [data-theme="light"] .accent {
+      opacity: 0.08;
+    }
+
+    @keyframes float{
+      0%{ transform: translateY(0) rotate(0deg); }
+      50%{ transform: translateY(-18px) rotate(6deg); }
+      100%{ transform: translateY(0) rotate(0deg); }
+    }
+
+    /* Pulse animation for availability status */
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    .pulse-ring {
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    /* Floating animation */
+    @keyframes float-gentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float-animation {
+      animation: float-gentle 3s ease-in-out infinite;
+    }
+
+    /* Slide in from left */
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Fade in scale */
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .glass-card{
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      border-color: rgba(233,196,106,0.3);
+    }
+
+    /* Circular icons */
+    .icon-circle {
+      width: 2rem;
+      height: 2rem;
+      min-width: 2rem;
+      min-height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .icon-circle:hover {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    .icon-circle-lg {
+      width: 2.5rem;
+      height: 2.5rem;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+      .icon-circle-lg {
+        width: 3rem;
+        height: 3rem;
+        min-width: 3rem;
+        min-height: 3rem;
+      }
+    }
+
+    .icon-circle-lg:hover {
+      transform: scale(1.1);
+    }
+
+    /* ============================================ */
+    /* ENHANCED PROFILE AVATAR STYLING */
+    /* ============================================ */
+    .profile-avatar-wrapper {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      min-width: 80px;
+      min-height: 80px;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+      .profile-avatar-wrapper {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        min-height: 100px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .profile-avatar-wrapper {
+        width: 120px;
+        height: 120px;
+        min-width: 120px;
+        min-height: 120px;
+      }
+    }
+
+    .profile-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background-clip: padding-box;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.08) translateY(-4px) rotate(2deg);
+    }
+
+    /* Responsive avatar sizing */
+    @media (max-width: 640px) {
+      .profile-avatar-wrapper {
+        width: 70px;
+        height: 70px;
+        min-width: 70px;
+        min-height: 70px;
+      }
+    }
+
+    /* Responsive heading sizes */
+    .hero-title { 
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 640px) {
+      .hero-title { 
+        font-size: 2rem; 
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-title { 
+        font-size: 1.5rem; 
+      }
+    }
+
+    /* tag pill */
+    .pill { 
+      background: var(--bg-secondary); 
+      border: 1px solid var(--border-color); 
+      padding: .25rem .6rem; 
+      border-radius: 999px; 
+      font-size: .72rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .pill:hover {
+      background: rgba(233,196,106,0.1);
+      border-color: var(--p-2);
+      transform: translateY(-2px);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+      .theme-toggle {
+        width: 60px;
+        height: 30px;
+      }
+    }
+
+    .theme-toggle-slider {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, var(--p-2), var(--p-3));
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+      .theme-toggle-slider {
+        top: 3px;
+        left: 3px;
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    [data-theme="light"] .theme-toggle-slider {
+      transform: translateX(24px);
+    }
+
+    @media (min-width: 768px) {
+      [data-theme="light"] .theme-toggle-slider {
+        transform: translateX(30px);
+      }
+    }
+
+    /* Availability badge */
+    .availability-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #22c55e;
+      animation: fadeInScale 0.6s ease-out;
+    }
+
+    @media (min-width: 768px) {
+      .availability-badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .availability-dot::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    /* Spotify widget */
+    .spotify-widget {
+      background: linear-gradient(135deg, rgba(30, 215, 96, 0.1), rgba(29, 185, 84, 0.05));
+      border: 1px solid rgba(30, 215, 96, 0.2);
+      border-radius: 12px;
+      padding: 0.875rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .spotify-widget {
+        padding: 1rem;
+      }
+    }
+
+    .spotify-widget:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(30, 215, 96, 0.2);
+    }
+
+    .spotify-album-art {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+      .spotify-album-art {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+      }
+    }
+
+    .spotify-equalizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .spotify-bar {
+      width: 3px;
+      background: #1DB954;
+      border-radius: 3px;
+      animation: music-bar 1s ease-in-out infinite;
+    }
+
+    .spotify-bar:nth-child(1) { animation-delay: 0s; }
+    .spotify-bar:nth-child(2) { animation-delay: 0.2s; }
+    .spotify-bar:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes music-bar {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+
+    /* Certificate badge */
+    .cert-badge {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .cert-badge:hover {
+      transform: scale(1.05);
+    }
+
+    .cert-badge::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255,255,255,0.1),
+        transparent
+      );
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    /* Progress bar animation */
+    @keyframes progressBar {
+      from { width: 0%; }
+    }
+
+    .progress-bar {
+      animation: progressBar 1.5s ease-out forwards;
+    }
+
+    /* subtle focus */
+    a:focus, button:focus, input:focus, textarea:focus{ 
+      outline: 2px solid rgba(42,157,143,0.22); 
+      outline-offset: 2px; 
+    }
+
+    /* Light mode text adjustments */
+    [data-theme="light"] .text-slate-200 {
+      color: var(--text-secondary);
+    }
+
+    [data-theme="light"] .text-slate-300 {
+      color: #64748b;
+    }
+
+    /* Tech icon styling */
+    .tech-icon {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+      .tech-icon {
+        font-size: 2rem;
+      }
+    }
+
+    .tech-icon:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--p-2), var(--p-3), var(--p-4));
+      z-index: 9999;
+      transition: width 0.1s ease;
+    }
+
+    /* Spotify Setup Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      position: relative;
+      margin: 5% auto;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 16px;
+      animation: fadeInScale 0.3s ease-out;
+    }
+
+    @media (min-width: 768px) {
+      .modal-content {
+        padding: 2rem;
+      }
+    }
+
+    .close {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .close:hover {
+      transform: scale(1.2) rotate(90deg);
+    }
+
+    /* Responsive text truncation */
+    .truncate-mobile {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 768px) {
+      .truncate-mobile {
+        white-space: normal;
+      }
+    }
+
+    /* Fix for small screens */
+    @media (max-width: 640px) {
+      .terminal-line {
+        font-size: 9px;
+      }
+      
+      body {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <!-- Terminal Animation Background -->
+  <div class="terminal-background" id="terminalBackground"></div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- floating accents -->
+  <div aria-hidden="true" class="accent" style="width:150px;height:100px;left:6%;top:10%;background:linear-gradient(135deg,var(--p-1),var(--p-2));"></div>
+  <div aria-hidden="true" class="accent" style="width:120px;height:120px;right:6%;bottom:12%;background:linear-gradient(135deg,var(--p-3),var(--p-4));animation-duration:10s;"></div>
+
+  <!-- Spotify Setup Modal -->
+  <div id="spotifyModal" class="modal">
+    <div class="modal-content glass-card">
+      <span class="close" onclick="closeSpotifyModal()">&times;</span>
+      <h2 class="text-lg md:text-xl font-bold mb-4" style="color: var(--p-2)">
+        <i class="fab fa-spotify"></i> Connect Spotify
+      </h2>
+      <p class="text-xs md:text-sm text-slate-200 mb-4">
+        To display your current playing track, you need to authorize this app with Spotify.
+      </p>
+      <div class="space-y-3">
+        <button onclick="authorizeSpotify()" class="w-full px-4 py-3 rounded-lg font-semibold text-white transition hover:scale-105 text-sm md:text-base" style="background: #1DB954;">
+          <i class="fab fa-spotify"></i> Connect with Spotify
+        </button>
+        <div class="text-xs text-slate-300 text-center">
+          Or manually enter your access token:
+        </div>
+        <input type="text" id="manualToken" placeholder="Paste access token here..." class="w-full px-3 py-2 rounded-lg text-xs md:text-sm" style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);">
+        <button onclick="saveManualToken()" class="w-full px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition hover:scale-105" style="background: linear-gradient(90deg, var(--p-2), var(--p-3)); color: #000;">
+          Save Token
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Toggle (fixed position) -->
+  <div class="fixed top-4 right-4 md:top-6 md:right-6 z-50">
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+      <div class="theme-toggle-slider">
+        <svg id="sunIcon" width="12" height="12" viewBox="0 0 24 24" fill="none" style="display: none;">
+          <circle cx="12" cy="12" r="5" fill="currentColor"/>
+          <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m17.66-5.66l-4.24 4.24M10.58 13.42l-4.24 4.24M5.34 5.34l4.24 4.24m4.24 4.24l4.24 4.24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg id="moonIcon" width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+        </svg>
+      </div>
+    </button>
+  </div>
+
+  <main class="min-h-screen flex items-center justify-center px-4 sm:px-6 py-8 sm:py-12" style="position: relative; z-index: 1;">
+    <div class="max-w-5xl w-full grid gap-6 lg:gap-8 grid-cols-1 lg:grid-cols-3">
+      <!-- Left column: Hero + contact -->
+      <header class="lg:col-span-1 relative glass-card rounded-2xl p-4 sm:p-6 lg:p-8 sheen">
+        <div class="flex items-start gap-3 sm:gap-4">
+          <!-- ENHANCED PROFILE AVATAR -->
+          <div class="profile-avatar-wrapper">
+            <img src="/static/profile-icon.png" alt="Koushik Navuluri" class="profile-avatar">
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <h1 class="hero-title font-extrabold break-words">Koushik Navuluri</h1>
+            <p class="mt-1 text-xs sm:text-sm text-[color:var(--p-2)] break-words">
+              <i class="fas fa-code"></i> AWS Cloud Engineer • DevOps • Infra Automation
+            </p>
+          </div>
+        </div>
+
+        <!-- Availability Status -->
+        <div class="mt-4">
+          <div class="availability-badge">
+            <span class="availability-dot"></span>
+            <span>Available for Work</span>
+          </div>
+        </div>
+
+        <p class="mt-4 text-xs sm:text-sm leading-relaxed text-slate-200">
+          I design secure, scalable AWS platforms — automating infrastructure with IaC, optimizing cost, and building
+          reliable CI/CD workflows. Currently delivering cloud solutions at Accenture.
+        </p>
+
+        <!-- Social Links -->
+        <div class="mt-5 flex flex-wrap gap-2">
+          <a class="pill flex items-center gap-2 hover:scale-105 transition" href="https://github.com/koushiknavuluri" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i>
+            GitHub
+          </a>
+
+          <a class="pill flex items-center gap-2 hover:scale-105 transition" href="https://www.linkedin.com/in/koushiknavuluri" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin"></i>
+            LinkedIn
+          </a>
+
+          <a class="pill flex items-center gap-2 hover:scale-105 transition" href="mailto:koushiknavuluri@gmail.com">
+            <i class="fas fa-envelope"></i>
+            Email
+          </a>
+
+          <a class="pill flex items-center gap-2 hover:scale-105 transition" href="https://twitter.com/koushiknavuluri" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-twitter"></i>
+            Twitter
+          </a>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="mt-6 space-y-3">
+          <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-200">
+            <i class="fas fa-map-marker-alt flex-shrink-0"></i>
+            <span class="break-words">Based in Hyderabad, India</span>
+          </div>
+        </div>
+
+        <!-- Spotify Now Playing Widget -->
+        <div class="mt-6 spotify-widget" id="spotifyWidget" onclick="handleSpotifyClick()">
+          <div class="flex items-center gap-3">
+            <img id="spotifyAlbumArt" src="" alt="Album Art" class="spotify-album-art" style="display: none;">
+            <i id="spotifyIcon" class="fab fa-spotify flex-shrink-0" style="color: #1DB954; font-size: 1.75rem;"></i>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs text-slate-300 mb-1">
+                <span id="spotifyStatus">Spotify</span>
+              </div>
+              <div class="text-xs sm:text-sm font-semibold truncate-mobile" id="spotifyTrack">Connect to see what's playing</div>
+              <div class="text-xs text-slate-300 truncate-mobile" id="spotifyArtist">Click to connect</div>
+            </div>
+            <div class="spotify-equalizer" id="spotifyEqualizer" style="display: none;">
+              <div class="spotify-bar"></div>
+              <div class="spotify-bar"></div>
+              <div class="spotify-bar"></div>
+            </div>
+          </div>
+          <div id="spotifyProgress" style="display: none; margin-top: 0.5rem;">
+            <div class="w-full bg-gray-700 rounded-full h-1">
+              <div id="spotifyProgressBar" class="h-1 rounded-full" style="width: 0%; background: #1DB954; transition: width 1s linear;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="mt-6 flex gap-2 flex-wrap">
+          <a href="#" class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border text-xs sm:text-sm hover:scale-105 transition" style="border-color: var(--border-color)">
+            <i class="fas fa-download"></i>
+            <span class="hidden sm:inline">Here's My CV</span>
+            <span class="sm:hidden">CV</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Right column: main content (spans 2 cols) -->
+      <section class="lg:col-span-2 space-y-6">
+        <!-- About -->
+        <article class="glass-card rounded-2xl p-4 sm:p-6" data-aos="fade-up">
+          <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+            <i class="fas fa-user-circle"></i> About Me
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-200 leading-relaxed mt-3">
+            Passionate AWS Cloud Engineer specialized in building resilient cloud platforms with automation, observability, and cost-conscious architectures.
+            I use Terraform / CloudFormation for IaC, containerize with Docker & Kubernetes (EKS), and design CI/CD pipelines (Jenkins, GitHub Actions) for fast, safe delivery.
+          </p>
+
+          <!-- Tech Stack with Real Icons -->
+          <div class="mt-6">
+            <h3 class="text-base sm:text-lg font-semibold mb-4 text-[color:var(--p-2)]">
+              <i class="fas fa-layer-group"></i> Tech Stack & Tools
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <!-- AWS -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#FF9900,#FF6600);color:#fff">
+                  <i class="devicon-amazonwebservices-plain-wordmark" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">AWS</div>
+                  <div class="text-xs text-slate-300">Cloud Platform</div>
+                </div>
+              </div>
+
+              <!-- Terraform -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#7B42BC,#5C3D99);color:#fff">
+                  <i class="devicon-terraform-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Terraform</div>
+                  <div class="text-xs text-slate-300">Infrastructure as Code</div>
+                </div>
+              </div>
+
+              <!-- Docker -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#2496ED,#0DB7ED);color:#fff">
+                  <i class="devicon-docker-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Docker</div>
+                  <div class="text-xs text-slate-300">Containerization</div>
+                </div>
+              </div>
+
+              <!-- Kubernetes -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#326CE5,#2555D7);color:#fff">
+                  <i class="devicon-kubernetes-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Kubernetes</div>
+                  <div class="text-xs text-slate-300">Container Orchestration</div>
+                </div>
+              </div>
+
+              <!-- Jenkins -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#D24939,#B42918);color:#fff">
+                  <i class="devicon-jenkins-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Jenkins</div>
+                  <div class="text-xs text-slate-300">CI/CD</div>
+                </div>
+              </div>
+
+              <!-- Python -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#3776AB,#FFD43B);color:#fff">
+                  <i class="devicon-python-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Python</div>
+                  <div class="text-xs text-slate-300">Automation & Scripting</div>
+                </div>
+              </div>
+
+              <!-- React -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#61DAFB,#21A1D6);color:#282c34">
+                  <i class="devicon-react-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">React</div>
+                  <div class="text-xs text-slate-300">Frontend Development</div>
+                </div>
+              </div>
+
+              <!-- Git -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#F05032,#D93C1F);color:#fff">
+                  <i class="devicon-git-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Git</div>
+                  <div class="text-xs text-slate-300">Version Control</div>
+                </div>
+              </div>
+
+              <!-- Linux -->
+              <div class="p-3 rounded-xl border flex items-center gap-3 hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(42,157,143,0.12)">
+                <div class="icon-circle" style="background:linear-gradient(135deg,#FCC624,#E89700);color:#000">
+                  <i class="devicon-linux-plain" style="font-size: 1.25rem;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs sm:text-sm font-medium">Linux</div>
+                  <div class="text-xs text-slate-300">Server Administration</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills Progress Bars -->
+          <div class="mt-6">
+            <h3 class="text-base sm:text-lg font-semibold mb-4 text-[color:var(--p-2)]">
+              <i class="fas fa-chart-line"></i> Skill Proficiency
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span>AWS & Cloud Architecture</span>
+                  <span>95%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                  <div class="progress-bar h-2 rounded-full" style="width: 95%; background: linear-gradient(90deg, var(--p-2), var(--p-3));"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span>Terraform & IaC</span>
+                  <span>90%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                  <div class="progress-bar h-2 rounded-full" style="width: 90%; background: linear-gradient(90deg, var(--p-3), var(--p-4));"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span>Docker & Kubernetes</span>
+                  <span>85%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                  <div class="progress-bar h-2 rounded-full" style="width: 85%; background: linear-gradient(90deg, var(--p-1), var(--p-2));"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span>CI/CD Pipelines</span>
+                  <span>88%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                  <div class="progress-bar h-2 rounded-full" style="width: 88%; background: linear-gradient(90deg, var(--p-2), var(--p-3));"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Certifications -->
+        <article class="glass-card rounded-2xl p-4 sm:p-6" data-aos="fade-up" data-aos-delay="40">
+          <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+            <i class="fas fa-certificate"></i> Certifications
+          </h2>
+          
+          <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- AWS Solutions Architect -->
+            <div class="cert-badge p-3 sm:p-4 rounded-xl border" style="background:var(--bg-secondary); border-color: rgba(255,153,0,0.2)">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #FF9900, #FF6600);">
+                  <i class="fas fa-award text-white text-xl sm:text-2xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm sm:text-base font-semibold text-[color:var(--p-2)] break-words">AWS Solutions Architect Associate</h4>
+                  <p class="text-xs text-slate-300 mt-1">Amazon Web Services</p>
+                  <div class="mt-2 flex items-center gap-2 flex-wrap">
+                    <span class="pill text-xs">
+                      <i class="fas fa-calendar-check"></i> Valid until 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AWS Developer -->
+            <div class="cert-badge p-3 sm:p-4 rounded-xl border" style="background:var(--bg-secondary); border-color: rgba(255,153,0,0.2)">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #FF9900, #FF6600);">
+                  <i class="fas fa-code text-white text-xl sm:text-2xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm sm:text-base font-semibold text-[color:var(--p-2)] break-words">AWS Certified Developer</h4>
+                  <p class="text-xs text-slate-300 mt-1">Amazon Web Services</p>
+                  <div class="mt-2 flex items-center gap-2 flex-wrap">
+                    <span class="pill text-xs">
+                      <i class="fas fa-calendar-check"></i> Valid until 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kubernetes -->
+            <div class="cert-badge p-3 sm:p-4 rounded-xl border" style="background:var(--bg-secondary); border-color: rgba(50,108,229,0.2)">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #326CE5, #2555D7);">
+                  <i class="devicon-kubernetes-plain text-white text-xl sm:text-2xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm sm:text-base font-semibold text-[color:var(--p-2)] break-words">CKA: Certified Kubernetes Admin</h4>
+                  <p class="text-xs text-slate-300 mt-1">Cloud Native Computing Foundation</p>
+                  <div class="mt-2 flex items-center gap-2 flex-wrap">
+                    <span class="pill text-xs">
+                      <i class="fas fa-calendar-check"></i> Valid until 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terraform -->
+            <div class="cert-badge p-3 sm:p-4 rounded-xl border" style="background:var(--bg-secondary); border-color: rgba(123,66,188,0.2)">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #7B42BC, #5C3D99);">
+                  <i class="devicon-terraform-plain text-white text-xl sm:text-2xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm sm:text-base font-semibold text-[color:var(--p-2)] break-words">HashiCorp Terraform Associate</h4>
+                  <p class="text-xs text-slate-300 mt-1">HashiCorp</p>
+                  <div class="mt-2 flex items-center gap-2 flex-wrap">
+                    <span class="pill text-xs">
+                      <i class="fas fa-calendar-check"></i> Valid until 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Verification Link -->
+          <div class="mt-4 text-center">
+            <a href="https://www.credly.com/users/koushiknavuluri" target="_blank" class="text-xs sm:text-sm text-[color:var(--p-2)] hover:underline">
+              <i class="fas fa-external-link-alt"></i> Verify certifications on Credly
+            </a>
+          </div>
+        </article>
+
+        <!-- Projects -->
+        <article class="glass-card rounded-2xl p-4 sm:p-6" data-aos="fade-up" data-aos-delay="80">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+              <i class="fas fa-project-diagram"></i> Highlighted Projects
+            </h2>
+          </div>
+
+          <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Project card 1 -->
+            <div class="rounded-xl p-3 sm:p-4 border hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(244,162,97,0.08)" data-aos="zoom-in">
+              <div class="flex items-start justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-cloud-upload-alt text-[color:var(--p-2)] text-lg sm:text-xl flex-shrink-0"></i>
+                  <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-[color:var(--p-2)] break-words">Serverless File Processor</h3>
+                </div>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-200 mt-2">File upload pipeline using S3, Lambda and DynamoDB for metadata. Event-driven, low-cost and auto-scaling.</p>
+              <div class="mt-3 flex gap-2 flex-wrap">
+                <span class="pill text-xs">
+                  <i class="devicon-amazonwebservices-plain-wordmark"></i> AWS Lambda
+                </span>
+                <span class="pill text-xs">API Gateway</span>
+                <span class="pill text-xs">DynamoDB</span>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <a href="#" class="text-xs text-[color:var(--p-2)] hover:underline">
+                  <i class="fab fa-github"></i> View Code
+                </a>
+                <a href="#" class="text-xs text-[color:var(--p-2)] hover:underline">
+                  <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+              </div>
+            </div>
+
+            <!-- Project card 2 -->
+            <div class="rounded-xl p-3 sm:p-4 border hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(233,196,106,0.08)" data-aos="zoom-in" data-aos-delay="40">
+              <div class="flex items-center gap-2 mb-2">
+                <i class="fas fa-rocket text-[color:var(--p-2)] text-lg sm:text-xl flex-shrink-0"></i>
+                <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-[color:var(--p-2)] break-words">Cloud Deployment Pipeline</h3>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-200 mt-2">CI/CD with Jenkins + Docker + AWS ECS enabling blue-green and zero-downtime deploys for microservices.</p>
+              <div class="mt-3 flex gap-2 flex-wrap">
+                <span class="pill text-xs">
+                  <i class="devicon-jenkins-plain"></i> Jenkins
+                </span>
+                <span class="pill text-xs">
+                  <i class="devicon-docker-plain"></i> Docker
+                </span>
+                <span class="pill text-xs">ECS</span>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <a href="#" class="text-xs text-[color:var(--p-2)] hover:underline">
+                  <i class="fab fa-github"></i> View Code
+                </a>
+              </div>
+            </div>
+
+            <!-- Project card 3 -->
+            <div class="rounded-xl p-3 sm:p-4 border hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(233,196,106,0.08)" data-aos="zoom-in" data-aos-delay="80">
+              <div class="flex items-center gap-2 mb-2">
+                <i class="fas fa-chart-area text-[color:var(--p-2)] text-lg sm:text-xl flex-shrink-0"></i>
+                <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-[color:var(--p-2)] break-words">Real-time Monitoring Dashboard</h3>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-200 mt-2">React + Flask dashboard integrating CloudWatch metrics for proactive alerts and heatmap visualizations.</p>
+              <div class="mt-3 flex gap-2 flex-wrap">
+                <span class="pill text-xs">
+                  <i class="devicon-react-plain"></i> React
+                </span>
+                <span class="pill text-xs">CloudWatch</span>
+                <span class="pill text-xs">
+                  <i class="devicon-python-plain"></i> Flask
+                </span>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <a href="#" class="text-xs text-[color:var(--p-2)] hover:underline">
+                  <i class="fab fa-github"></i> View Code
+                </a>
+              </div>
+            </div>
+
+            <!-- Project card 4 -->
+            <div class="rounded-xl p-3 sm:p-4 border hover:scale-105 transition" style="background:var(--bg-secondary); border-color: rgba(233,196,106,0.08)" data-aos="zoom-in" data-aos-delay="100">
+              <div class="flex items-center gap-2 mb-2">
+                <i class="fas fa-dollar-sign text-[color:var(--p-2)] text-lg sm:text-xl flex-shrink-0"></i>
+                <h3 class="text-sm sm:text-base lg:text-lg font-semibold text-[color:var(--p-2)] break-words">Infrastructure Cost Optimizer</h3>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-200 mt-2">Lambda-driven analyzer that consumes Cost Explorer data and suggests rightsizing and savings (RI/spot) opportunities.</p>
+              <div class="mt-3 flex gap-2 flex-wrap">
+                <span class="pill text-xs">Cost Explorer</span>
+                <span class="pill text-xs">
+                  <i class="devicon-amazonwebservices-plain-wordmark"></i> AWS Lambda
+                </span>
+                <span class="pill text-xs">Automation</span>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <a href="#" class="text-xs text-[color:var(--p-2)] hover:underline">
+                  <i class="fab fa-github"></i> View Code
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Experience timeline -->
+        <article class="glass-card rounded-2xl p-4 sm:p-6" data-aos="fade-up" data-aos-delay="120">
+          <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+            <i class="fas fa-briefcase"></i> Experience
+          </h2>
+
+          <div class="mt-6 space-y-4">
+            <!-- timeline item -->
+            <div class="flex gap-3 sm:gap-4 items-start hover:scale-105 transition">
+              <div class="icon-circle-lg" style="background:linear-gradient(135deg,var(--p-2),var(--p-3)); color:#082226">
+                <i class="fas fa-cloud"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                  <h4 class="text-xs sm:text-sm font-semibold break-words">Cloud Engineer — Accenture</h4>
+                  <span class="pill text-xs whitespace-nowrap">
+                    <i class="far fa-calendar"></i> Sep 2023 – Present
+                  </span>
+                  <span class="pill text-xs whitespace-nowrap" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); color: #22c55e;">
+                    <i class="fas fa-circle" style="font-size: 6px;"></i> Current
+                  </span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-200 mt-1">Designed and automated AWS infrastructure (EC2, Lambda, CloudFront), built IaC modules (CloudFormation/Terraform), and implemented CI/CD for production services.</p>
+                <div class="mt-2 flex gap-2 flex-wrap">
+                  <span class="pill text-xs">
+                    <i class="devicon-amazonwebservices-plain-wordmark"></i> AWS
+                  </span>
+                  <span class="pill text-xs">
+                    <i class="devicon-terraform-plain"></i> Terraform
+                  </span>
+                  <span class="pill text-xs">
+                    <i class="devicon-docker-plain"></i> Docker
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-3 sm:gap-4 items-start hover:scale-105 transition">
+              <div class="icon-circle-lg" style="background:linear-gradient(135deg,var(--p-1),var(--p-2)); color:#082226">
+                <i class="fas fa-database"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                  <h4 class="text-xs sm:text-sm font-semibold break-words">Data Engineering Intern — Teachnook</h4>
+                  <span class="pill text-xs whitespace-nowrap">
+                    <i class="far fa-calendar"></i> Feb 2023 – Apr 2023
+                  </span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-200 mt-1">Built ETL pipelines with Glue & Lambda and ingested normalized data into Redshift for analytics and reporting.</p>
+                <div class="mt-2 flex gap-2 flex-wrap">
+                  <span class="pill text-xs">
+                    <i class="devicon-python-plain"></i> Python
+                  </span>
+                  <span class="pill text-xs">AWS Glue</span>
+                  <span class="pill text-xs">Redshift</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Education & Achievements -->
+        <article class="glass-card rounded-2xl p-4 sm:p-6" data-aos="fade-up" data-aos-delay="160">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+                <i class="fas fa-graduation-cap"></i> Education
+              </h2>
+              <div class="mt-4 bg-[var(--bg-secondary)] p-3 sm:p-4 rounded-lg border hover:scale-105 transition" style="border-color: rgba(42,157,143,0.08)">
+                <div class="flex items-start gap-3">
+                  <div class="icon-circle" style="background:linear-gradient(135deg,var(--p-2),var(--p-3)); color:#082226">
+                    <i class="fas fa-university"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-xs sm:text-sm font-medium break-words">B.Tech — Computer Science & Engineering</div>
+                    <div class="text-xs text-slate-300 mt-1">Bharath University</div>
+                    <div class="text-xs text-slate-300">2019 – 2023</div>
+                    <div class="mt-2">
+                      <span class="pill text-xs" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); color: #22c55e;">
+                        <i class="fas fa-star"></i> GPA: 9.0 / 10
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+                <i class="fas fa-trophy"></i> Achievements
+              </h2>
+              <ul class="mt-4 space-y-3">
+                <li class="flex items-start gap-3 text-xs sm:text-sm text-slate-200 hover:scale-105 transition">
+                  <div class="icon-circle flex-shrink-0" style="background:linear-gradient(135deg,var(--p-3),var(--p-4)); color:#082226; width: 2rem; height: 2rem;">
+                    <i class="fas fa-award"></i>
+                  </div>
+                  <span>Recognized at Accenture for cloud automation and performance improvements.</span>
+                </li>
+                <li class="flex items-start gap-3 text-xs sm:text-sm text-slate-200 hover:scale-105 transition">
+                  <div class="icon-circle flex-shrink-0" style="background:linear-gradient(135deg,var(--p-1),var(--p-2)); color:#082226; width: 2rem; height: 2rem;">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                  <span>Built an infra cost analysis tool that identified >20% savings opportunities (prototype).</span>
+                </li>
+                <li class="flex items-start gap-3 text-xs sm:text-sm text-slate-200 hover:scale-105 transition">
+                  <div class="icon-circle flex-shrink-0" style="background:linear-gradient(135deg,var(--p-2),var(--p-3)); color:#082226; width: 2rem; height: 2rem;">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <span>Led DevOps workshops for 50+ developers on containerization best practices.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog/Articles Section -->
+        <article class="glass-card rounded-2xl p-4 sm:p-6" data-aos="fade-up" data-aos-delay="180">
+          <h2 class="text-xl sm:text-2xl font-semibold inline-block border-b pb-1" style="border-color: rgba(233,196,106,0.25); color: var(--text-primary)">
+            <i class="fas fa-blog"></i> Latest Articles
+          </h2>
+          
+          <div class="mt-5 space-y-3">
+            <a href="#" class="block p-3 rounded-lg hover:scale-105 transition" style="background:var(--bg-secondary); border: 1px solid var(--border-color)">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-xs sm:text-sm font-semibold text-[color:var(--p-2)] break-words">
+                    <i class="fas fa-newspaper"></i> Building Scalable AWS Infrastructure with Terraform
+                  </h4>
+                  <p class="text-xs text-slate-300 mt-1">A comprehensive guide to setting up production-ready AWS infrastructure...</p>
+                  <div class="mt-2 flex gap-2 flex-wrap">
+                    <span class="pill text-xs">AWS</span>
+                    <span class="pill text-xs">Terraform</span>
+                    <span class="pill text-xs">5 min read</span>
+                  </div>
+                </div>
+                <i class="fas fa-arrow-right text-[color:var(--p-2)] flex-shrink-0"></i>
+              </div>
+            </a>
+
+            <a href="#" class="block p-3 rounded-lg hover:scale-105 transition" style="background:var(--bg-secondary); border: 1px solid var(--border-color)">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-xs sm:text-sm font-semibold text-[color:var(--p-2)] break-words">
+                    <i class="fas fa-newspaper"></i> Zero-Downtime Deployments with Kubernetes
+                  </h4>
+                  <p class="text-xs text-slate-300 mt-1">Implementing rolling updates and blue-green deployments in production...</p>
+                  <div class="mt-2 flex gap-2 flex-wrap">
+                    <span class="pill text-xs">Kubernetes</span>
+                    <span class="pill text-xs">DevOps</span>
+                    <span class="pill text-xs">8 min read</span>
+                  </div>
+                </div>
+                <i class="fas fa-arrow-right text-[color:var(--p-2)] flex-shrink-0"></i>
+              </div>
+            </a>
+          </div>
+        </article>
+
+        <!-- Contact CTA -->
+        <article id="contact" class="glass-card rounded-2xl p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="float-animation">
+            <i class="fas fa-envelope-open-text text-4xl sm:text-5xl mb-4" style="color: var(--p-2)"></i>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-semibold mb-2" style="border-bottom: 1px solid rgba(233,196,106,0.18); display:inline-block; padding-bottom:6px; color: var(--text-primary)">Let's build something</h2>
+          <p class="text-xs sm:text-sm text-slate-200 mt-2 max-w-xl mx-auto px-4">Open to roles in cloud engineering, DevOps, and SRE. Available for freelance and contract work. Reach out and we'll make something great.</p>
+          <div class="mt-6 flex items-center justify-center gap-3 flex-wrap px-4">
+            <a href="mailto:koushiknavuluri@gmail.com" class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 rounded-full font-semibold text-black hover:scale-105 transition text-xs sm:text-sm" style="background:linear-gradient(90deg,var(--p-2),var(--p-3));">
+              <i class="fas fa-paper-plane"></i>
+              Say Hello
+            </a>
+            <a href="tel:+918688599125" class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border hover:scale-105 transition text-xs sm:text-sm" style="border-color: var(--border-color)">
+              <i class="fas fa-phone"></i>
+              Call
+            </a>
+            <a href="https://calendly.com/koushiknavuluri" target="_blank" class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full border hover:scale-105 transition text-xs sm:text-sm whitespace-nowrap" style="border-color: var(--border-color)">
+              <i class="fas fa-calendar-alt"></i>
+              <span class="hidden sm:inline">Schedule Meeting</span>
+              <span class="sm:hidden">Schedule</span>
+            </a>
+          </div>
+
+          <!-- Social Media Footer -->
+          <div class="mt-6 flex items-center justify-center gap-4">
+            <a href="https://github.com/koushiknavuluri" target="_blank" class="icon-circle hover:scale-110 transition" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/koushiknavuluri" target="_blank" class="icon-circle hover:scale-110 transition" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com/koushiknavuluri" target="_blank" class="icon-circle hover:scale-110 transition" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://medium.com/@koushiknavuluri" target="_blank" class="icon-circle hover:scale-110 transition" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
+              <i class="fab fa-medium"></i>
+            </a>
+          </div>
+        </article>
+
+        <footer class="text-center text-xs text-slate-300 mt-4 px-4">
+          © <span id="year"></span> Koushik Navuluri • Built with ♥︎ 
+        </footer>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // ============================================
+    // TERMINAL ANIMATION BACKGROUND
+    // ============================================
+    const terminalCommands = [
+      // Linux Commands
+      'ls -la /home/koushik',
+      'cd /var/www/projects',
+      'sudo systemctl status nginx',
+      'tail -f /var/log/syslog',
+      'grep -r "error" /var/log/',
+      'ps aux | grep node',
+      'top -n 1',
+      'df -h',
+      'netstat -tulpn',
+      'chmod +x deploy.sh',
+      'ssh ubuntu@ec2-instance',
+      'scp file.tar.gz user@server:/path',
+      'vim ~/.bashrc',
+      'cat /etc/os-release',
+      'uname -a',
+      
+      // AWS Commands
+      'aws s3 ls s3://my-bucket',
+      'aws ec2 describe-instances',
+      'aws cloudformation deploy',
+      'aws lambda list-functions',
+      'aws eks update-kubeconfig',
+      'aws iam list-users',
+      'aws rds describe-db-instances',
+      'aws cloudwatch get-metric-data',
+      'aws elasticache describe-cache-clusters',
+      'aws route53 list-hosted-zones',
+      'aws ecr get-login-password',
+      'aws ecs list-clusters',
+      'aws dynamodb scan --table-name users',
+      
+      // Terraform Commands
+      'terraform init',
+      'terraform plan -out=tfplan',
+      'terraform apply -auto-approve',
+      'terraform destroy',
+      'terraform validate',
+      'terraform fmt -recursive',
+      'terraform state list',
+      'terraform output',
+      'terraform workspace select prod',
+      'terraform import aws_instance.web i-1234567890',
+      
+      // Kubernetes Commands
+      'kubectl get pods -n production',
+      'kubectl describe deployment web-app',
+      'kubectl logs -f pod/nginx-abc123',
+      'kubectl apply -f deployment.yaml',
+      'kubectl scale deployment web --replicas=5',
+      'kubectl get services --all-namespaces',
+      'kubectl exec -it pod/app-123 -- /bin/bash',
+      'kubectl rollout status deployment/web',
+      'kubectl get nodes',
+      'kubectl top pods',
+      'kubectl delete pod nginx-abc123',
+      'helm install myapp ./chart',
+      'helm upgrade --install myapp ./chart',
+      
+      // Docker Commands
+      'docker ps -a',
+      'docker build -t myapp:latest .',
+      'docker-compose up -d',
+      'docker logs -f container_name',
+      'docker exec -it nginx /bin/bash',
+      'docker images | grep myapp',
+      'docker pull nginx:alpine',
+      'docker network ls',
+      'docker volume create data',
+      
+      // Git Commands
+      'git status',
+      'git add .',
+      'git commit -m "feat: add CI/CD pipeline"',
+      'git push origin main',
+      'git pull --rebase',
+      'git branch -a',
+      'git checkout -b feature/new-api',
+      'git merge develop',
+      'git log --oneline --graph',
+      
+      // CI/CD & Jenkins
+      'jenkins-cli build job/deploy-prod',
+      'npm run build',
+      'npm test -- --coverage',
+      './gradlew clean build',
+      'pytest tests/',
+      'ansible-playbook deploy.yml',
+      
+      // Monitoring
+      'curl -X GET https://api.example.com/health',
+      'watch -n 1 kubectl get pods',
+      'journalctl -u nginx -f',
+      'htop',
+      'iotop',
+    ];
+  
+    function createTerminalAnimation() {
+      const container = document.getElementById('terminalBackground');
+      
+      function spawnCommand() {
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+        
+        const cmd = terminalCommands[Math.floor(Math.random() * terminalCommands.length)];
+        line.innerHTML = `<span class="terminal-prompt">$ </span>${cmd}`;
+        
+        // Random position
+        line.style.left = Math.random() * 90 + '%';
+        line.style.top = Math.random() * 90 + '%';
+        
+        // Random delay for animation
+        line.style.animationDelay = Math.random() * 2 + 's';
+        
+        container.appendChild(line);
+        
+        // Remove after animation
+        setTimeout(() => {
+          line.remove();
+        }, 17000);
+      }
+      
+      // Initial spawn
+      for (let i = 0; i < 15; i++) {
+        setTimeout(spawnCommand, i * 500);
+      }
+      
+      // Continue spawning
+      setInterval(spawnCommand, 1200);
+    }
+  
+    // ============================================
+    // SPOTIFY INTEGRATION - KOUSHI'S NOW PLAYING
+    // ============================================
+    const SPOTIFY_CONFIG = {
+      checkInterval: 60000, // Check every 50 seconds
+      nowPlayingUrl: '/api/now-playing'
+    };
+  
+    // Initialize Spotify widget on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchNowPlaying();
+      setInterval(fetchNowPlaying, SPOTIFY_CONFIG.checkInterval);
+    });
+  
+    function handleSpotifyClick() {
+      // If playing, open track URL
+      const trackUrl = document.getElementById('spotifyWidget').dataset.trackUrl;
+      if (trackUrl && trackUrl !== '#') {
+        window.open(trackUrl, '_blank');
+      }
+    }
+  
+    async function fetchNowPlaying() {
+      try {
+        const response = await fetch(SPOTIFY_CONFIG.nowPlayingUrl);
+        const data = await response.json();
+        
+        if (data.error) {
+          updateSpotifyWidget(null, false);
+          return;
+        }
+        
+        updateSpotifyWidget(data, false);
+      } catch (error) {
+        console.error('Error fetching now playing:', error);
+        updateSpotifyWidget(null, false);
+      }
+    }
+  
+    function updateSpotifyWidget(data, needAuth) {
+      const spotifyTrack = document.getElementById('spotifyTrack');
+      const spotifyArtist = document.getElementById('spotifyArtist');
+      const spotifyStatus = document.getElementById('spotifyStatus');
+      const spotifyEqualizer = document.getElementById('spotifyEqualizer');
+      const spotifyAlbumArt = document.getElementById('spotifyAlbumArt');
+      const spotifyIcon = document.getElementById('spotifyIcon');
+      const spotifyProgress = document.getElementById('spotifyProgress');
+      const spotifyProgressBar = document.getElementById('spotifyProgressBar');
+      const spotifyWidget = document.getElementById('spotifyWidget');
+  
+      if (data && data.is_playing) {
+        spotifyTrack.textContent = data.track_name;
+        spotifyArtist.textContent = data.artist_name;
+        spotifyStatus.textContent = 'Now Listening to';
+        spotifyEqualizer.style.display = 'flex';
+        
+        if (data.album_art) {
+          spotifyAlbumArt.src = data.album_art;
+          spotifyAlbumArt.style.display = 'block';
+          spotifyIcon.style.display = 'none';
+        }
+  
+        spotifyProgress.style.display = 'block';
+        spotifyProgressBar.style.width = data.progress_percent + '%';
+        
+        // Store track URL for click handler
+        spotifyWidget.dataset.trackUrl = data.track_url;
+        spotifyWidget.onclick = handleSpotifyClick;
+        spotifyWidget.style.cursor = 'pointer';
+        
+        // Smooth progress update
+        if (data.duration_ms && data.progress_ms) {
+          const remainingTime = data.duration_ms - data.progress_ms;
+          const progressIncrement = (100 / data.duration_ms) * SPOTIFY_CONFIG.checkInterval;
+          
+          spotifyProgressBar.style.transition = `width ${SPOTIFY_CONFIG.checkInterval}ms linear`;
+        }
+      } else if (needAuth) {
+        spotifyTrack.textContent = 'Spotify Not Connected';
+        spotifyArtist.textContent = 'API endpoint unavailable';
+        spotifyStatus.textContent = 'Spotify';
+        spotifyEqualizer.style.display = 'none';
+        spotifyAlbumArt.style.display = 'none';
+        spotifyIcon.style.display = 'block';
+        spotifyProgress.style.display = 'none';
+        spotifyWidget.onclick = null;
+        spotifyWidget.style.cursor = 'default';
+      } else {
+        spotifyTrack.textContent = 'Not playing right now';
+        spotifyArtist.textContent = 'May be chilling!';
+        spotifyStatus.textContent = 'Spotify';
+        spotifyEqualizer.style.display = 'none';
+        spotifyAlbumArt.style.display = 'none';
+        spotifyIcon.style.display = 'block';
+        spotifyProgress.style.display = 'none';
+        spotifyWidget.onclick = null;
+        spotifyWidget.style.cursor = 'default';
+      }
+    }
+  
+    // ============================================
+    // THEME TOGGLE
+    // ============================================
+    const themeToggle = document.getElementById('themeToggle');
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    
+    // Load saved theme or default to dark
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', currentTheme);
+    
+    if (currentTheme === 'light') {
+      sunIcon.style.display = 'block';
+      moonIcon.style.display = 'none';
+    }
+  
+    themeToggle.addEventListener('click', () => {
+      const theme = document.body.getAttribute('data-theme');
+      const newTheme = theme === 'dark' ? 'light' : 'dark';
+      
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      if (newTheme === 'light') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    });
+  
+    // ============================================
+    // SCROLL PROGRESS BAR
+    // ============================================
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scrollProgress').style.width = scrolled + '%';
+    });
+  
+    // ============================================
+    // AOS ANIMATION INITIALIZATION
+    // ============================================
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 50
+    });
+  
+    // ============================================
+    // CURRENT YEAR
+    // ============================================
+    document.getElementById('year').textContent = new Date().getFullYear();
+  
+    // ============================================
+    // TOAST NOTIFICATIONS
+    // ============================================
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.className = 'fixed bottom-6 right-6 px-4 py-3 rounded-lg shadow-lg z-50 text-sm';
+      toast.style.background = 'var(--bg-primary)';
+      toast.style.color = 'var(--text-primary)';
+      toast.style.border = '1px solid var(--border-color)';
+      toast.style.animation = 'fadeInScale 0.3s ease-out';
+      toast.style.maxWidth = 'calc(100vw - 3rem)';
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'fadeInScale 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  
+    // Download CV placeholder
+    document.querySelectorAll('a[href="#"]').forEach(btn => {
+      if (!btn.onclick) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast('📄 CV download coming soon! Attach your PDF to enable.');
+        });
+      }
+    });
+  
+    // ============================================
+    // SMOOTH SCROLL
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && !this.onclick) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+  
+    // ============================================
+    // PARALLAX EFFECT FOR FLOATING ACCENTS
+    // ============================================
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const accents = document.querySelectorAll('.accent');
+      accents.forEach((accent, index) => {
+        const speed = (index + 1) * 0.2;
+        accent.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+  
+    // ============================================
+    // PREVENT ZOOM ON DOUBLE-TAP (iOS)
+    // ============================================
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+  
+    // ============================================
+    // INITIALIZE TERMINAL ANIMATION
+    // ============================================
+    createTerminalAnimation();
+  </script>
+  
+</body>
+</html>
